@@ -1,22 +1,21 @@
-import {Component, NgZone, OnInit} from 'angular2/core';
-import {Injectable} from 'angular2/angular2';
+import {Component, Injectable, NgZone, OnInit} from 'angular2/core';
 
 export class HeroInternals {
 
   getHeroes() {
-    return ['SuperA','SuperB','SuperC'];
+    return ['SA','SuperB','SuperC'];
   }  
 
 }
 
+@Injectable()
 export class HeroServices {
 
-  constructor() {
+  constructor(private h: HeroInternals) {
   }
   
   getHeroes() {
-    return ['a'];
-    //return this.h.getHeroes();
+    return this.h.getHeroes();
   }  
 }
 
@@ -28,7 +27,7 @@ export class HeroServices2 {
   }
   
   getHeroes() {
-    return ['a'];
+    return ['b'];
     //return this.h.getHeroes();
   }  
 }
@@ -82,7 +81,7 @@ export class AppComponent implements OnInit {
   msgatrasada : string = "...carregando...";
 
   constructor(heroServices: HeroServices, h1: HeroInternals, private zone: NgZone) {
-    this.heroes = h1.getHeroes(); 
+    this.heroes = heroServices.getHeroes(); 
 
     //var injector = new Injector([HeroServices]);
     //let h = injector.get(HeroServices);
